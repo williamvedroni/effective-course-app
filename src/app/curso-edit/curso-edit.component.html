@@ -1,0 +1,104 @@
+<mat-card>
+  <form #cursoForm="ngForm" (ngSubmit)="save(curso)">
+    <mat-card-header>
+      <mat-card-title><h2>{{curso.id ? 'Editar' : 'Cadastrar'}} Curso</h2></mat-card-title>
+    </mat-card-header>
+    <div>
+    	<mat-error *ngIf="msg.error">{{ msg.error.message }}</mat-error>
+    </div>
+    <mat-card-content>
+    <div class="example-container">
+      	<input type="hidden" name="curso" [(ngModel)]="curso">
+
+      	<mat-card>
+
+      	<!-- Descricao -->
+		<mat-form-field>
+			<input matInput 
+				placeholder="Nome" 
+				[(ngModel)]="curso.descricao" 
+				required name="descricao" #name>
+		</mat-form-field>
+
+		</mat-card>
+
+		<mat-card>
+		<!-- Data inicio -->
+		<mat-form-field>
+		  <input matInput 
+		  	[matDatepicker]="picker" 
+		  	placeholder="Início" 
+		  	[(ngModel)]="curso.inicio" 
+		  	required name="Início" #name>
+		  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+		  <mat-datepicker #picker></mat-datepicker>
+		</mat-form-field>
+
+		<!-- Data termino -->
+		<mat-form-field>
+		  <input matInput 
+		  	[matDatepicker]="dt_end" 
+		  	placeholder="Término" 
+		  	[(ngModel)]="curso.termino" 
+		  	required name="Término" #name>
+		  <mat-datepicker-toggle matSuffix [for]="dt_end"></mat-datepicker-toggle>
+		  <mat-datepicker #dt_end></mat-datepicker>
+		</mat-form-field>
+
+	</mat-card>
+
+<mat-card>
+		<mat-form-field>
+		    <input matInput 
+		    	type="number" 
+		    	placeholder="Alunos" 
+		    	min="1" 
+		    	max="100"
+		    	[(ngModel)]="curso.alunos" 
+		    	required name="Alunos" #name
+		    	>
+	  	</mat-form-field>
+</mat-card>
+
+<mat-card>
+		<mat-form-field>
+		  <mat-label>Categoria</mat-label>
+		  <mat-select 
+		  [(ngModel)]="curso.categoria" 
+		  [compareWith]="compareObjects"
+		  required name="Categorias" #name>
+		    <mat-option *ngFor="let categoria of categorias" [value]="categoria">
+		      {{categoria.descricao}}
+		    </mat-option>
+		  </mat-select>
+		</mat-form-field>
+	</mat-card>
+
+	</div>
+
+
+    </mat-card-content>
+
+    <mat-card-actions>
+      <button mat-raised-button color="primary" type="submit"
+              [disabled]="!cursoForm.form.valid">Salvar</button>
+      <button 
+      		mat-raised-button 
+      		color="secondary" 
+      		(click)="remove(curso.id)"
+            *ngIf="curso.id" 
+            type="button">
+           	Deletar
+       </button>
+
+      <a mat-button routerLink="/curso-list">Cancelar</a>
+
+    </mat-card-actions>
+
+    <mat-card-footer>
+      <div class="giphy">
+        
+      </div>
+    </mat-card-footer>
+  </form>
+</mat-card>
